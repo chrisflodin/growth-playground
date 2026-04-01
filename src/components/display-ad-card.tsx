@@ -1,5 +1,3 @@
-"use client";
-
 import { DisplayAdPreview } from "@/components/display-ad-preview";
 import {
   Card,
@@ -9,7 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { GeneratedDisplayAd } from "@/lib/generate-display-ads";
-import { useState } from "react";
 
 type DisplayAdCardProps = {
   ad: GeneratedDisplayAd;
@@ -18,38 +15,11 @@ type DisplayAdCardProps = {
 export function DisplayAdCard({ ad }: DisplayAdCardProps) {
   const isCanvasSecurityConcept = ad.headline === "Canvas LMS. Now With Security.";
   const isLockdownBuiltForCanvas = ad.headline === "The lockdown browser built for Canvas";
-  const [alignment, setAlignment] = useState<"center" | "left">("left");
 
   return (
     <Card className={isLockdownBuiltForCanvas ? "gap-0 overflow-hidden py-0" : "gap-5 overflow-hidden py-0"}>
       <div className="p-4 pb-0">
-        <DisplayAdPreview ad={ad} alignment={alignment} />
-        <div className="mt-3 flex justify-center">
-          <div className="inline-flex rounded-full border border-border bg-muted/50 p-1">
-            <button
-              type="button"
-              onClick={() => setAlignment("center")}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                alignment === "center"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Centered
-            </button>
-            <button
-              type="button"
-              onClick={() => setAlignment("left")}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                alignment === "left"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Left-aligned
-            </button>
-          </div>
-        </div>
+        <DisplayAdPreview ad={ad} />
       </div>
       <CardHeader className={isLockdownBuiltForCanvas ? "gap-0 px-0 pt-0 pb-0" : "px-4"}>
         <div

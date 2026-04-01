@@ -4,7 +4,6 @@ import Image from "next/image";
 
 type DisplayAdPreviewProps = {
   ad: GeneratedDisplayAd;
-  alignment?: "center" | "left";
 };
 
 function splitHeadline(headline: string) {
@@ -32,18 +31,19 @@ function splitHeadline(headline: string) {
   };
 }
 
-export function DisplayAdPreview({
-  ad,
-  alignment = "center",
-}: DisplayAdPreviewProps) {
+export function DisplayAdPreview({ ad }: DisplayAdPreviewProps) {
   const variant =
     adStyleVariants.find((entry) => entry.id === ad.styleVariantId) ??
     adStyleVariants[0];
   const isDarkVariant = variant.surfaceClassName.includes("text-white");
-  const isCentered = alignment === "center";
   const usesRightStackedSupports = ad.groupId === "better-lockdown-browser";
   const { leadLine, accentLine } = splitHeadline(ad.headline);
   const supportPills = ad.supportingMessages.slice(0, 3);
+  const floatingSupportLayouts = [
+    { className: "right-5 bottom-35 w-[7.2rem]", zIndex: 12 },
+    { className: "right-16 bottom-15 w-[7.8rem]", zIndex: 11 },
+    { className: "right-3 top-[2.9rem] w-[6.8rem]", zIndex: 20 },
+  ];
   const leftAlignedSupportLayouts = [
     "left-4 top-1 max-w-[11.5rem]",
     "left-9 top-[4.4rem] max-w-[10.75rem]",
@@ -73,7 +73,7 @@ export function DisplayAdPreview({
       ))}
 
       <div className="relative z-10 flex h-full flex-col px-2 pb-2">
-        <div className={isCentered ? "flex justify-center" : "flex justify-start pl-4"}>
+        <div className="flex justify-start pl-4">
           <Image
             src={variant.logoSrc}
             width={variant.logoWidth}
@@ -84,38 +84,30 @@ export function DisplayAdPreview({
           />
         </div>
 
-        <div className={`mt-7 px-4 ${isCentered ? "text-center" : "text-left"}`}>
+        <div className="mt-7 px-4 text-left">
           <p
             className={`text-[0.72rem] font-medium tracking-[0.18em] uppercase ${eyebrowClassName}`}
           >
             Digiexam Lockdown
           </p>
           <h3
-            className={`mt-3 text-[3rem] leading-[0.94] font-semibold tracking-[-0.05em] sm:text-[3.25rem] ${
-              isCentered ? "" : "max-w-[13ch]"
-            } ${variant.headlineClassName}`}
+            className={`mt-3 max-w-[13ch] text-[3rem] leading-[0.94] font-semibold tracking-[-0.05em] sm:text-[3.25rem] ${variant.headlineClassName}`}
           >
             <span className="block">{leadLine}</span>
             {accentLine ? (
-              <span className={`mt-1 block text-[#F4346F] ${isCentered ? "" : "whitespace-nowrap"}`}>
+              <span className="mt-1 block whitespace-nowrap text-[#F4346F]">
                 {accentLine}
               </span>
             ) : null}
           </h3>
           {ad.subtitle ? (
             <p
-              className={`mt-3 max-w-[26ch] text-[1.02rem] leading-[1.15] ${bodyClassName} ${
-                isCentered ? "mx-auto" : ""
-              }`}
+              className={`mt-3 max-w-[26ch] text-[1.02rem] leading-[1.15] ${bodyClassName}`}
             >
               {ad.subtitle}
             </p>
           ) : null}
-          <div
-            className={`${ad.subtitle ? "mt-5" : "mt-4"} flex ${
-              isCentered ? "justify-center" : "justify-start"
-            }`}
-          >
+          <div className={`${ad.subtitle ? "mt-5" : "mt-4"} flex justify-start`}>
             <div
               className={`inline-flex min-h-11 items-center rounded-[0.95rem] px-6 text-[0.98rem] font-medium ${ctaClassName}`}
             >
@@ -128,44 +120,27 @@ export function DisplayAdPreview({
           className={`relative mt-auto ${
             usesRightStackedSupports
               ? "min-h-[12.5rem] pt-4"
-              : isCentered
-                ? "min-h-[11.75rem] pt-6"
-                : "min-h-[12.5rem] pt-4"
+              : "min-h-[12.5rem] pt-4"
           }`}
         >
           {usesRightStackedSupports ? (
-            <div className="absolute inset-x-5 bottom-5 z-10 flex items-end justify-between gap-2">
+            <div className="absolute right-3 bottom-10 z-10 h-[7.25rem] w-[15.5rem]">
               {supportPills.map((message, index) => (
                 <div
                   key={message}
-                  className={`relative overflow-hidden rounded-[1rem] px-3 py-2.5 text-[0.86rem] leading-[1.12] font-medium backdrop-blur-[4px] ${pillSurfaceClassName} ${
-                    index === 0
-                      ? "mb-2 w-[7.8rem]"
-                      : index === 1
-                        ? "w-[8.4rem]"
-                        : "mb-1 w-[7.2rem]"
+                  className={`absolute overflow-hidden rounded-[1rem] px-3 py-2.5 text-[0.82rem] leading-[1.1] font-medium backdrop-blur-[4px] ${pillSurfaceClassName} ${
+                    (
+                      floatingSupportLayouts[index] ??
+                      floatingSupportLayouts[floatingSupportLayouts.length - 1]
+                    ).className
                   }`}
-                >
-                  <div
-                    aria-hidden="true"
-                    className={`absolute inset-y-0 left-0 w-1.5 ${index === 1 ? "bg-[#5085F7]" : "bg-[#F4346F]"}`}
-                  />
-                  <p className="relative pl-1">{message}</p>
-                </div>
-              ))}
-            </div>
-          ) : isCentered ? (
-            <div className="relative z-10 flex max-w-[16.5rem] flex-wrap gap-3 pb-4">
-              {supportPills.map((message, index) => (
-                <div
-                  key={message}
-                  className={`relative overflow-hidden rounded-[1.15rem] px-4 py-3 text-[1rem] leading-[1.18] font-medium backdrop-blur-[4px] ${pillSurfaceClassName} ${
-                    index === 0
-                      ? "max-w-[11.5rem]"
-                      : index === 1
-                        ? "ml-3 max-w-[10.5rem]"
-                        : "max-w-[9.75rem]"
-                  }`}
+                  style={{
+                    zIndex:
+                      (
+                        floatingSupportLayouts[index] ??
+                        floatingSupportLayouts[floatingSupportLayouts.length - 1]
+                      ).zIndex,
+                  }}
                 >
                   <div
                     aria-hidden="true"
@@ -195,37 +170,27 @@ export function DisplayAdPreview({
           )}
           <div
             aria-hidden="true"
-            className={`absolute h-28 w-28 rounded-full bg-[#F4346F]/50 blur-2xl ${
-              isCentered ? "-right-3 bottom-2" : "right-8 bottom-2"
-            }`}
+            className="absolute right-8 bottom-2 h-28 w-28 rounded-full bg-[#F4346F]/50 blur-2xl"
           />
           <div
             aria-hidden="true"
-            className={`absolute h-20 w-20 rounded-full bg-[#5085F7]/40 blur-xl ${
-              isCentered ? "right-10 top-6" : "right-14 top-10"
-            }`}
+            className="absolute right-14 top-10 h-20 w-20 rounded-full bg-[#5085F7]/40 blur-xl"
           />
           <div
             aria-hidden="true"
-            className={`absolute h-[8.5rem] w-[11.5rem] rounded-[2rem] border ${
-              isCentered ? "right-6 bottom-4" : "right-8 bottom-4"
-            } ${
+            className={`absolute right-8 bottom-4 h-[8.5rem] w-[11.5rem] rounded-[2rem] border ${
               isDarkVariant ? "border-white/8 bg-white/4" : "border-[#0D1527]/8 bg-white/35"
             } backdrop-blur-[4px]`}
           />
           <div
             aria-hidden="true"
-            className={`absolute h-[9rem] w-[9rem] rounded-full ${
-              isCentered ? "-right-2 bottom-0" : "right-0 bottom-0"
-            } ${
+            className={`absolute right-0 bottom-0 h-[9rem] w-[9rem] rounded-full ${
               isDarkVariant ? "border border-white/10" : "border border-[#0D1527]/8"
             }`}
           />
           <div
             aria-hidden="true"
-            className={`absolute h-[5rem] w-[5rem] rounded-full ${
-              isCentered ? "right-14 top-8" : "right-20 top-8"
-            } ${
+            className={`absolute right-20 top-8 h-[5rem] w-[5rem] rounded-full ${
               isDarkVariant ? "border border-white/10" : "border border-[#0D1527]/8"
             }`}
           />
