@@ -4,6 +4,7 @@ import { adRules, messageGroups, unusedMessages } from "@/lib/display-ads-config
 export type GeneratedDisplayAd = {
   id: string;
   headline: string;
+  subtitle: string | null;
   supportingMessages: string[];
   groupId: string;
   groupTitle: string;
@@ -43,7 +44,9 @@ export function generateDisplayAds(): GeneratedDisplayAd[] {
         (message) =>
           !unusedMessages.some(
             (unusedMessage) =>
-              unusedMessage.groupId === group.id && unusedMessage.message === message
+              unusedMessage.groupId === group.id &&
+              unusedMessage.headline === headline &&
+              unusedMessage.message === message
           )
       );
       const globalIndex = messageGroups
@@ -59,10 +62,10 @@ export function generateDisplayAds(): GeneratedDisplayAd[] {
         adRules.styleVariantOrder[
           globalIndex % adRules.styleVariantOrder.length
         ];
-
       return {
         id: `${group.id}-${groupHeadlineIndex + 1}`,
         headline,
+        subtitle: group.subheadline,
         supportingMessages: pickSupportingMessages(
           availableSupportingMessages,
           groupHeadlineIndex,

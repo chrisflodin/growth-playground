@@ -1,3 +1,5 @@
+"use client";
+
 import { DisplayAdPreview } from "@/components/display-ad-preview";
 import {
   Card,
@@ -7,21 +9,60 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { GeneratedDisplayAd } from "@/lib/generate-display-ads";
+import { useState } from "react";
 
 type DisplayAdCardProps = {
   ad: GeneratedDisplayAd;
 };
 
 export function DisplayAdCard({ ad }: DisplayAdCardProps) {
+  const isCanvasSecurityConcept = ad.headline === "Canvas LMS. Now With Security.";
+  const isLockdownBuiltForCanvas = ad.headline === "The lockdown browser built for Canvas";
+  const [alignment, setAlignment] = useState<"center" | "left">("left");
+
   return (
-    <Card className="gap-5 overflow-hidden py-0">
+    <Card className={isLockdownBuiltForCanvas ? "gap-0 overflow-hidden py-0" : "gap-5 overflow-hidden py-0"}>
       <div className="p-4 pb-0">
-        <DisplayAdPreview ad={ad} />
+        <DisplayAdPreview ad={ad} alignment={alignment} />
+        <div className="mt-3 flex justify-center">
+          <div className="inline-flex rounded-full border border-border bg-muted/50 p-1">
+            <button
+              type="button"
+              onClick={() => setAlignment("center")}
+              className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                alignment === "center"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Centered
+            </button>
+            <button
+              type="button"
+              onClick={() => setAlignment("left")}
+              className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                alignment === "left"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Left-aligned
+            </button>
+          </div>
+        </div>
       </div>
-      <CardHeader className="px-4">
-        <div className="flex items-start justify-between gap-4">
-          <div className="space-y-2">
-            <CardTitle className="text-base">{ad.headline}</CardTitle>
+      <CardHeader className={isLockdownBuiltForCanvas ? "gap-0 px-0 pt-0 pb-0" : "px-4"}>
+        <div
+          className={
+            isCanvasSecurityConcept
+              ? "flex flex-col items-center gap-3 text-center"
+              : "flex items-start justify-between gap-4"
+          }
+        >
+          <div className={isCanvasSecurityConcept ? "space-y-2 text-center" : "space-y-2"}>
+            <CardTitle className={isCanvasSecurityConcept ? "text-base text-center" : "text-base"}>
+              {ad.headline}
+            </CardTitle>
             <CardDescription>{ad.groupTitle}</CardDescription>
           </div>
           <span className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground">
@@ -30,10 +71,15 @@ export function DisplayAdCard({ ad }: DisplayAdCardProps) {
           </span>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4 px-4 pb-4">
+      <CardContent className={isLockdownBuiltForCanvas ? "space-y-0 px-0 pb-0" : "space-y-4 px-4 pb-4"}>
         <div className="rounded-lg bg-secondary/80 p-3 text-sm text-muted-foreground">
           {ad.prospectContext}
         </div>
+        {ad.subtitle ? (
+          <div className="rounded-lg border border-border/80 bg-background px-3 py-2 text-sm text-foreground">
+            {ad.subtitle}
+          </div>
+        ) : null}
         <div className="space-y-2">
           {ad.supportingMessages.map((message) => (
             <div

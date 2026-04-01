@@ -3,6 +3,7 @@ export type MessageGroup = {
   title: string;
   prospectContext: string;
   headlines: string[];
+  subheadline: string | null;
   supportingMessages: string[];
 };
 
@@ -24,11 +25,8 @@ export const messageGroups: MessageGroup[] = [
       "Canvas LMS. Now With Security.",
       "The lockdown browser built for Canvas",
     ],
-    supportingMessages: [
-      "Running secure assessments in Canvas shouldn't be hard.",
-      "Keep everything in Canvas",
-      "Teacher-eye-roll-free",
-    ],
+    subheadline: "Running secure assessments in Canvas shouldn't be hard.",
+    supportingMessages: [],
   },
   {
     id: "better-lockdown-browser",
@@ -36,28 +34,21 @@ export const messageGroups: MessageGroup[] = [
     prospectContext:
       "The prospect wants to try Respondus Lockdown Browser, or is already using Lockdown Browser with discontent.",
     headlines: [
-      "A lockdown browser that just works",
-      "A hassle free lockdown browser",
-      "A simpler lockdown browser for Canvas schools",
+      "The lockdown browser that just works",
+      "The hassle-free lockdown browser",
+      "A simpler lockdown browser",
     ],
+    subheadline: "Running secure assessments in Canvas shouldn't be hard.",
     supportingMessages: [
       "Simple to use",
       "Quizzes AND Assignments",
       "Feels native to Canvas",
       "A familiar assessment experience",
-      "Running secure assessments in Canvas shouldn't be hard.",
     ],
   },
 ];
 
-export const unusedMessages: UnusedMessage[] = [
-  {
-    id: "secure-in-canvas-keep-everything",
-    groupId: "secure-in-canvas",
-    headline: "Canvas LMS. Now With Security.",
-    message: "Keep everything in Canvas",
-  },
-];
+export const unusedMessages: UnusedMessage[] = [];
 
 export const adRules = {
   maxSupportingMessages: 3,

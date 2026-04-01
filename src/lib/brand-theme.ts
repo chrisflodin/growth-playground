@@ -133,25 +133,16 @@ export const adStyleVariants: AdStyleVariant[] = [
     logoHeight: 24,
     backgroundStyle: {
       background:
-        "linear-gradient(180deg, #F4F4F5 0%, #FFFFFF 100%)",
+        "linear-gradient(145deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.12) 100%)",
     },
     shapes: [
-      {
-        className: "rounded-[2rem] border",
-        style: {
-          inset: "7%",
-          borderColor: "rgba(13, 21, 39, 0.1)",
-          background:
-            "linear-gradient(145deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.12) 100%)",
-        },
-      },
       {
         className: "rounded-full",
         style: {
           width: "26%",
           height: "26%",
           right: "10%",
-          bottom: "16%",
+          bottom: "9%",
           background:
             "linear-gradient(145deg, rgba(80, 133, 247, 0.9) 0%, rgba(182, 208, 255, 0.3) 100%)",
         },

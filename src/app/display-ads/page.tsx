@@ -1,13 +1,5 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { DisplayAdCard } from "@/components/display-ad-card";
-import { brandTheme } from "@/lib/brand-theme";
-import { adRules, messageGroups, unusedMessages } from "@/lib/display-ads-config";
+import { adRules, messageGroups } from "@/lib/display-ads-config";
 import { generateDisplayAds } from "@/lib/generate-display-ads";
 
 export default function DisplayAdsPage() {
@@ -39,8 +31,8 @@ export default function DisplayAdsPage() {
         </div>
       </div>
 
-      <div className="grid flex-1 gap-6 p-6 lg:grid-cols-[minmax(0,1fr)_320px] 2xl:grid-cols-[minmax(0,1fr)_340px]">
-        <section className="space-y-6">
+      <div className="flex-1 p-6">
+        <section className="mx-auto w-full max-w-[1040px] space-y-6">
           {messageGroups.map((group, groupIndex) => {
             const groupAds = ads.filter((ad) => ad.groupId === group.id);
 
@@ -70,105 +62,6 @@ export default function DisplayAdsPage() {
             );
           })}
         </section>
-
-        <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
-          <Card>
-            <CardHeader>
-              <CardTitle>Unused messages</CardTitle>
-              <CardDescription>
-                Copy held back from the current ad set so it can be reused later.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {unusedMessages.map((message) => (
-                <div key={message.id} className="rounded-lg bg-secondary/80 p-4">
-                  <p className="font-medium text-foreground">{message.message}</p>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Reserved from: {message.headline}
-                  </p>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Page details</CardTitle>
-              <CardDescription>
-                This route turns the messaging themes into quick ad previews for
-                internal review.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm text-muted-foreground">
-              <div className="rounded-lg bg-secondary/80 p-4">
-                <p className="font-medium text-foreground">Content source</p>
-                <p className="mt-1">
-                  Two message groups, six total headlines, and supporting-message
-                  pools normalized into a typed config.
-                </p>
-              </div>
-              <div className="rounded-lg bg-secondary/80 p-4">
-                <p className="font-medium text-foreground">Combination rule</p>
-                <p className="mt-1">
-                  Each ad uses one headline and no more than three supporting
-                  messages, with the count and style order kept configurable.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Brand translation</CardTitle>
-              <CardDescription>
-                The shell stays close to CRM, while the ads borrow more directly
-                from the visual guide.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 text-sm text-muted-foreground">
-              <div className="flex flex-wrap gap-2">
-                {Object.entries(brandTheme.palette).map(([name, color]) => (
-                  <div
-                    key={name}
-                    className="flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5"
-                  >
-                    <span
-                      className="h-3 w-3 rounded-full border border-black/10"
-                      style={{ backgroundColor: color }}
-                    />
-                    <span>{name}</span>
-                  </div>
-                ))}
-              </div>
-              <ul className="space-y-2">
-                <li>Clean surfaces, generous spacing, and restrained UI chrome.</li>
-                <li>Dark-blue and white foundations with controlled blue or magenta accents.</li>
-                <li>Gradient-backed circles, arcs, and beams instead of flat decoration.</li>
-                <li>Headline-first square compositions with simple supporting copy blocks.</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Message groups</CardTitle>
-              <CardDescription>
-                The current ad set reflects every headline from the messaging file.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {messageGroups.map((group) => (
-                <div key={group.id} className="rounded-lg bg-secondary/80 p-4">
-                  <p className="font-medium text-foreground">{group.title}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {group.headlines.length} headlines, {group.supportingMessages.length}{" "}
-                    supporting messages
-                  </p>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </aside>
       </div>
     </div>
   );
