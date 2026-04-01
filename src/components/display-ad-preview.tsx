@@ -41,6 +41,7 @@ export function DisplayAdPreview({
     adStyleVariants[0];
   const isDarkVariant = variant.surfaceClassName.includes("text-white");
   const isCentered = alignment === "center";
+  const usesRightStackedSupports = ad.groupId === "better-lockdown-browser";
   const { leadLine, accentLine } = splitHeadline(ad.headline);
   const supportPills = ad.supportingMessages.slice(0, 3);
   const leftAlignedSupportLayouts = [
@@ -123,8 +124,37 @@ export function DisplayAdPreview({
           </div>
         </div>
 
-        <div className={`relative mt-auto ${isCentered ? "min-h-[11.75rem] pt-6" : "min-h-[12.5rem] pt-4"}`}>
-          {isCentered ? (
+        <div
+          className={`relative mt-auto ${
+            usesRightStackedSupports
+              ? "min-h-[12.5rem] pt-4"
+              : isCentered
+                ? "min-h-[11.75rem] pt-6"
+                : "min-h-[12.5rem] pt-4"
+          }`}
+        >
+          {usesRightStackedSupports ? (
+            <div className="absolute inset-x-5 bottom-5 z-10 flex items-end justify-between gap-2">
+              {supportPills.map((message, index) => (
+                <div
+                  key={message}
+                  className={`relative overflow-hidden rounded-[1rem] px-3 py-2.5 text-[0.86rem] leading-[1.12] font-medium backdrop-blur-[4px] ${pillSurfaceClassName} ${
+                    index === 0
+                      ? "mb-2 w-[7.8rem]"
+                      : index === 1
+                        ? "w-[8.4rem]"
+                        : "mb-1 w-[7.2rem]"
+                  }`}
+                >
+                  <div
+                    aria-hidden="true"
+                    className={`absolute inset-y-0 left-0 w-1.5 ${index === 1 ? "bg-[#5085F7]" : "bg-[#F4346F]"}`}
+                  />
+                  <p className="relative pl-1">{message}</p>
+                </div>
+              ))}
+            </div>
+          ) : isCentered ? (
             <div className="relative z-10 flex max-w-[16.5rem] flex-wrap gap-3 pb-4">
               {supportPills.map((message, index) => (
                 <div

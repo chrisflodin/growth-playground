@@ -43,7 +43,7 @@ export const messageGroups: MessageGroup[] = [
       "Simple to use",
       "Quizzes AND Assignments",
       "Feels native to Canvas",
-      "A familiar assessment experience",
+      "Familiar for teachers and students",
     ],
   },
 ];
