@@ -18,7 +18,7 @@ export function DisplayAdCard({ ad }: DisplayAdCardProps) {
 
   return (
     <Card className={isLockdownBuiltForCanvas ? "gap-0 overflow-hidden py-0" : "gap-5 overflow-hidden py-0"}>
-      <div className="p-4 pb-0">
+      <div>
         <DisplayAdPreview ad={ad} />
       </div>
       <CardHeader className={isLockdownBuiltForCanvas ? "gap-0 px-0 pt-0 pb-0" : "px-4"}>
