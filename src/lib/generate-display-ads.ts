@@ -1,5 +1,5 @@
 import { adStyleVariants } from "@/lib/brand-theme";
-import { adRules, messageGroups } from "@/lib/display-ads-config";
+import { adRules, messageGroups, unusedMessages } from "@/lib/display-ads-config";
 
 export type GeneratedDisplayAd = {
   id: string;
@@ -7,7 +7,6 @@ export type GeneratedDisplayAd = {
   supportingMessages: string[];
   groupId: string;
   groupTitle: string;
-  adLabel: string;
   prospectContext: string;
   styleVariantId: string;
   globalIndex: number;
@@ -40,6 +39,13 @@ function pickSupportingMessages(
 export function generateDisplayAds(): GeneratedDisplayAd[] {
   return messageGroups.flatMap((group) =>
     group.headlines.map((headline, groupHeadlineIndex) => {
+      const availableSupportingMessages = group.supportingMessages.filter(
+        (message) =>
+          !unusedMessages.some(
+            (unusedMessage) =>
+              unusedMessage.groupId === group.id && unusedMessage.message === message
+          )
+      );
       const globalIndex = messageGroups
         .slice(0, messageGroups.findIndex((entry) => entry.id === group.id))
         .reduce((count, entry) => count + entry.headlines.length, 0) +
@@ -58,13 +64,12 @@ export function generateDisplayAds(): GeneratedDisplayAd[] {
         id: `${group.id}-${groupHeadlineIndex + 1}`,
         headline,
         supportingMessages: pickSupportingMessages(
-          group.supportingMessages,
+          availableSupportingMessages,
           groupHeadlineIndex,
           Math.min(supportingCount, adRules.maxSupportingMessages)
         ),
         groupId: group.id,
         groupTitle: group.title,
-        adLabel: group.adLabel,
         prospectContext: group.prospectContext,
         styleVariantId:
           adStyleVariants.find((variant) => variant.id === styleVariantId)?.id ??

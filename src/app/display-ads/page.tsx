@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { DisplayAdCard } from "@/components/display-ad-card";
 import { brandTheme } from "@/lib/brand-theme";
-import { adRules, messageGroups } from "@/lib/display-ads-config";
+import { adRules, messageGroups, unusedMessages } from "@/lib/display-ads-config";
 import { generateDisplayAds } from "@/lib/generate-display-ads";
 
 export default function DisplayAdsPage() {
@@ -41,14 +41,56 @@ export default function DisplayAdsPage() {
 
       <div className="grid flex-1 gap-6 p-6 lg:grid-cols-[minmax(0,1fr)_320px] 2xl:grid-cols-[minmax(0,1fr)_340px]">
         <section className="space-y-6">
-          <div className="grid gap-6 xl:grid-cols-2">
-            {ads.map((ad) => (
-              <DisplayAdCard key={ad.id} ad={ad} />
-            ))}
-          </div>
+          {messageGroups.map((group, groupIndex) => {
+            const groupAds = ads.filter((ad) => ad.groupId === group.id);
+
+            return (
+              <div
+                key={group.id}
+                className={groupIndex === 0 ? "space-y-6" : "space-y-6 border-t pt-6"}
+              >
+                <div className="space-y-2">
+                  <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                    Message theme
+                  </p>
+                  <h3 className="text-xl font-semibold tracking-tight text-foreground">
+                    {group.title}
+                  </h3>
+                  <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
+                    {group.prospectContext}
+                  </p>
+                </div>
+
+                <div className="grid gap-6 xl:grid-cols-2">
+                  {groupAds.map((ad) => (
+                    <DisplayAdCard key={ad.id} ad={ad} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </section>
 
         <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
+          <Card>
+            <CardHeader>
+              <CardTitle>Unused messages</CardTitle>
+              <CardDescription>
+                Copy held back from the current ad set so it can be reused later.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {unusedMessages.map((message) => (
+                <div key={message.id} className="rounded-lg bg-secondary/80 p-4">
+                  <p className="font-medium text-foreground">{message.message}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Reserved from: {message.headline}
+                  </p>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
           <Card>
             <CardHeader>
               <CardTitle>Page details</CardTitle>

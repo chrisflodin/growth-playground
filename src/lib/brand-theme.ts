@@ -9,9 +9,12 @@ export type AdStyleVariant = {
   id: string;
   name: string;
   surfaceClassName: string;
-  eyebrowClassName: string;
   headlineClassName: string;
   supportingClassName: string;
+  supportSurfaceClassName: string;
+  logoSrc: string;
+  logoWidth: number;
+  logoHeight: number;
   backgroundStyle: CSSProperties;
   shapes: AdShape[];
 };
@@ -42,9 +45,13 @@ export const adStyleVariants: AdStyleVariant[] = [
     id: "signal-dark",
     name: "Signal Dark",
     surfaceClassName: "text-white",
-    eyebrowClassName: "bg-white/14 text-white/85",
     headlineClassName: "text-white",
     supportingClassName: "text-white/82",
+    supportSurfaceClassName: "bg-white/6",
+    logoSrc:
+      "https://www.digiexam.com/images/digiexam-logos/digiexam_wordmark_white.png",
+    logoWidth: 120,
+    logoHeight: 24,
     backgroundStyle: {
       background:
         "radial-gradient(circle at top right, rgba(182, 208, 255, 0.2), transparent 34%), linear-gradient(160deg, #0D1527 0%, #101C39 58%, #274E9D 100%)",
@@ -78,9 +85,13 @@ export const adStyleVariants: AdStyleVariant[] = [
     id: "quiet-paper",
     name: "Quiet Paper",
     surfaceClassName: "text-[#0D1527]",
-    eyebrowClassName: "bg-[#0D1527]/6 text-[#0D1527]/70",
     headlineClassName: "text-[#0D1527]",
     supportingClassName: "text-[#405066]",
+    supportSurfaceClassName: "bg-white/75",
+    logoSrc:
+      "https://www.digiexam.com/images/digiexam-logos/digiexam_wordmark_darkblue.png",
+    logoWidth: 120,
+    logoHeight: 24,
     backgroundStyle: {
       background:
         "linear-gradient(180deg, #FFFFFF 0%, #F7F8FB 100%)",
@@ -113,9 +124,13 @@ export const adStyleVariants: AdStyleVariant[] = [
     id: "frame-light",
     name: "Frame Light",
     surfaceClassName: "text-[#0D1527]",
-    eyebrowClassName: "bg-[#5085F7]/12 text-[#0D1527]/75",
     headlineClassName: "text-[#0D1527]",
     supportingClassName: "text-[#46556A]",
+    supportSurfaceClassName: "bg-white/70",
+    logoSrc:
+      "https://www.digiexam.com/images/digiexam-logos/digiexam_wordmark_darkblue.png",
+    logoWidth: 120,
+    logoHeight: 24,
     backgroundStyle: {
       background:
         "linear-gradient(180deg, #F4F4F5 0%, #FFFFFF 100%)",
@@ -147,9 +162,13 @@ export const adStyleVariants: AdStyleVariant[] = [
     id: "deep-arc",
     name: "Deep Arc",
     surfaceClassName: "text-white",
-    eyebrowClassName: "bg-white/10 text-white/82",
     headlineClassName: "text-white",
     supportingClassName: "text-white/80",
+    supportSurfaceClassName: "bg-white/5",
+    logoSrc:
+      "https://www.digiexam.com/images/digiexam-logos/digiexam_wordmark_white.png",
+    logoWidth: 120,
+    logoHeight: 24,
     backgroundStyle: {
       background:
         "linear-gradient(180deg, #0D1527 0%, #18284B 100%)",
@@ -192,9 +211,13 @@ export const adStyleVariants: AdStyleVariant[] = [
     id: "split-focus",
     name: "Split Focus",
     surfaceClassName: "text-[#0D1527]",
-    eyebrowClassName: "bg-white/70 text-[#0D1527]/70",
     headlineClassName: "text-[#0D1527]",
     supportingClassName: "text-[#3D4B60]",
+    supportSurfaceClassName: "bg-white/76",
+    logoSrc:
+      "https://www.digiexam.com/images/digiexam-logos/digiexam_wordmark_darkblue.png",
+    logoWidth: 120,
+    logoHeight: 24,
     backgroundStyle: {
       background:
         "linear-gradient(145deg, #FFFFFF 0%, #F7F8FB 58%, #EEF3FF 100%)",
@@ -229,9 +252,13 @@ export const adStyleVariants: AdStyleVariant[] = [
     id: "corner-beam",
     name: "Corner Beam",
     surfaceClassName: "text-white",
-    eyebrowClassName: "bg-white/12 text-white/84",
     headlineClassName: "text-white",
     supportingClassName: "text-white/78",
+    supportSurfaceClassName: "bg-white/6",
+    logoSrc:
+      "https://www.digiexam.com/images/digiexam-logos/digiexam_wordmark_white.png",
+    logoWidth: 120,
+    logoHeight: 24,
     backgroundStyle: {
       background:
         "linear-gradient(135deg, #0D1527 0%, #162546 54%, #5085F7 100%)",
